@@ -10,9 +10,8 @@ jobs:
         qt_ver: [5.12.3]  #[5.6.3,5.12.3]
         qt_target: [desktop]
         qt_arch: [win64_msvc2017_64] # [win64_msvc2017_64, win32_msvc2017, win32_mingw53,win32_mingw73]
-        include:
-          - qt_arch: win64_msvc2017_64
-            msvc_arch: x64
+        msvc_arch: [x64]
+        qt_arch_install: [msvc2017_64]
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
@@ -28,6 +27,10 @@ jobs:
         env:
           vc_arch: ${{ matrix.msvc_arch }}
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
           qmake
           nmake
+          echo winSdkDir=%WindowsSdkDir% >> %GITHUB_ENV%
+          echo winSdkVer=%WindowsSdkVersion% >> %GITHUB_ENV%
+          echo vcToolsInstallDir=%VCToolsInstallDir% >> %GITHUB_ENV%
+          echo vcToolsRedistDir=%VCToolsRedistDir% >> %GITHUB_ENV%
