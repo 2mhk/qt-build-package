@@ -1,5 +1,5 @@
-# windows.yml
-name: Windows
+# qt_5_12_3-win64_msvc2017_64.yml
+name: qt_5_12_3-win64_msvc2017_64
 on: 
   # push代码时触发workflow
   push:
@@ -47,7 +47,7 @@ jobs:
       # 安装Qt
       - name: Install Qt
         # 使用外部action。这个action专门用来安装Qt
-        uses: jurplel/install-qt-action@v4.0.0
+        uses: jurplel/install-qt-action@v4
         with:
           # Version of Qt to install
           version: ${{ matrix.qt_ver }}
